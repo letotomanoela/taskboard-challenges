@@ -17,6 +17,7 @@ export const TaskContext = createContext({
   deleteTask: () => {},
   selectionnedId: "",
   setSelectionnedId: (str: string) => {},
+  updateTask: () => {},
 });
 
 type Task = {
@@ -122,10 +123,51 @@ export default function TaskContextProvider({
       setIsErrorEditDelete(true);
     }
   };
+  const updateTask = async () => {
+    try {
+      setIsLoadingEditDelete(true);
+      setIsErrorEditDelete(false);
+      setIsSuccessEditDelete(false);
+      const result = await fetch(`${API}/${selectionnedId}`, {
+        method: "PUT",
+        body: JSON.stringify(formData),
+        headers: {
+          "Content-type": "application/json",
+        },
+      });
+      const data = await result.json();
+      setIsLoadingEditDelete(false);
+      setIsSuccessEditDelete(true);
+      setTimeout(() => {
+        setIsSuccessEditDelete(false);
+      }, 1000);
+      getTasks();
+    } catch (error) {
+      setIsLoadingEditDelete(false);
+      setIsErrorEditDelete(true);
+    }
+  };
 
   useEffect(() => {
     getTasks();
   }, []);
+
+  useEffect(() => {
+    const getTaskById = async () => {
+      try {
+        const result = await fetch(`${API}/${selectionnedId}`);
+        const data: Task = await result.json();
+        console.log(data.name);
+        setFormData({
+          name: data.name,
+          description: data.description,
+          icon: data.icon,
+          status: data.status,
+        });
+      } catch (error) {}
+    };
+    if (selectionnedId !== "") getTaskById();
+  }, [selectionnedId]);
 
   return (
     <TaskContext.Provider
@@ -146,6 +188,7 @@ export default function TaskContextProvider({
         deleteTask,
         selectionnedId,
         setSelectionnedId,
+        updateTask,
       }}
     >
       {children}

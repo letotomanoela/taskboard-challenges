@@ -19,6 +19,7 @@ const EditTaskModal = ({ closeModal }: { closeModal: () => void }) => {
     isSuccessEditDelete,
     deleteTask,
     setSelectionnedId,
+    updateTask,
   } = useContext(TaskContext);
 
   useEffect(() => {
@@ -46,7 +47,7 @@ const EditTaskModal = ({ closeModal }: { closeModal: () => void }) => {
           label="Task name"
           type="text"
           category="input"
-          name="title"
+          name="name"
         />
         <FormElement
           label="Description"
@@ -81,6 +82,7 @@ const EditTaskModal = ({ closeModal }: { closeModal: () => void }) => {
           <img src="./Trash.svg" className="icon" alt="" />
         </button>
         <button
+          onClick={updateTask}
           disabled={isLoadingEditDelete}
           className="px-10 py-2 flex items-center space-x-3  rounded-full text-white bg-[#3662E3]"
         >
