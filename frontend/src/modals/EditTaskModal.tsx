@@ -40,7 +40,7 @@ const EditTaskModal = () => {
         />
         <FormElement label="Status" type="text" category="status" />
       </form>
-      <div className="w-full absolute right-5 bottom-4 space-x-2 flex items-center justify-end">
+      <div className="w-full  space-x-2 flex items-center justify-end">
         <button className="px-10 py-2 flex items-center space-x-3  rounded-full text-white bg-[#97A3B6]">
           <span className="text-base">Delete</span>
           <img src="./Trash.svg" className="icon" alt="" />

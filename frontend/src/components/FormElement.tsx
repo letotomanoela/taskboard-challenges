@@ -37,9 +37,9 @@ const FormElement = ({
         />
       )}
       {category === "icon" && (
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center flex-wrap gap-4">
           {dataIcons?.map((item) => (
-            <div className="size-10 bg-[#E3E8EF] flex items-center justify-center rounded-lg">
+            <div className="size-10 bg-[#E3E8EF] flex  items-center justify-center rounded-lg">
               <img key={item} alt={item} src={item} className="w-7 " />
             </div>
           ))}
@@ -47,7 +47,7 @@ const FormElement = ({
       )}
 
       {category === "status" && (
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {["PROGRESS", "COMPLETED", "WONTDO"].map((item) => (
             <div
               key={item}
