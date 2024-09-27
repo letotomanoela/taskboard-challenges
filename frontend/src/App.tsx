@@ -1,5 +1,6 @@
 import Task from "./components/Task";
 import AddTaskModal from "./modals/AddTaskModal";
+import EditTaskModal from "./modals/EditTaskModal";
 import Title from "./sections/Title";
 
 const App = () => {
@@ -17,7 +18,7 @@ const App = () => {
         <AddTaskButton />
       </div>
 
-      <AddTaskModal />
+      <EditTaskModal />
     </main>
   );
 };
