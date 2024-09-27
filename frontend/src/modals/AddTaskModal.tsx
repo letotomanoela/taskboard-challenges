@@ -1,5 +1,8 @@
 import Modal from "../components/Modal";
 import FormElement from "../components/FormElement";
+import { useContext, useEffect } from "react";
+import { TaskContext } from "../contexts/TaskContext";
+
 const icons: string[] = [
   "./gif/angry.gif",
   "./gif/angry1.gif",
@@ -10,6 +13,14 @@ const icons: string[] = [
 ];
 
 const AddTaskModal = ({ closeModal }: { closeModal: () => void }) => {
+  const { isLoadingAdd, isSuccessAdd, isErrorAdd, addTask } =
+    useContext(TaskContext);
+
+  useEffect(() => {
+    if (isSuccessAdd) {
+      closeModal();
+    }
+  }, [isSuccessAdd]);
   return (
     <Modal>
       <div className="flex items-center justify-between">
@@ -21,12 +32,17 @@ const AddTaskModal = ({ closeModal }: { closeModal: () => void }) => {
           <img src="./close_ring_duotone-1.svg" className="w-7" alt="" />
         </div>
       </div>
-      <form className="mt-8 space-y-4">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+        className="mt-8 space-y-4"
+      >
         <FormElement
           label="Task name"
           type="text"
           category="input"
-          name="title"
+          name="name"
         />
         <FormElement
           label="Description"
@@ -40,11 +56,21 @@ const AddTaskModal = ({ closeModal }: { closeModal: () => void }) => {
           type="text"
           category="icon"
           dataIcons={icons}
+          name="icon"
         />
-        <FormElement label="Status" type="text" category="status" />
+        <FormElement
+          name="status"
+          label="Status"
+          type="text"
+          category="status"
+        />
       </form>
-      <button className="px-10 py-2 absolute bottom-3 right-2 rounded-full text-white bg-[#3662E3]">
-        Add
+      <button
+        disabled={isLoadingAdd}
+        onClick={addTask}
+        className="px-10 py-2 absolute bottom-3 right-2 rounded-full text-white bg-[#3662E3]"
+      >
+        {isLoadingAdd ? "Adding ..." : "Add"}
       </button>
     </Modal>
   );

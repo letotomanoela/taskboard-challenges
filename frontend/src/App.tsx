@@ -28,6 +28,7 @@ const App = () => {
             {tasks.map((item) => (
               <Task
                 key={item.id}
+                id={item.id}
                 openModal={toggleEditTaskModal}
                 status={item.status}
                 title={item.name}

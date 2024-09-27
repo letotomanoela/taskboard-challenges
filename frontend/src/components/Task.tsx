@@ -1,4 +1,6 @@
 import clsx from "clsx";
+import { useContext } from "react";
+import { TaskContext } from "../contexts/TaskContext";
 
 type Props = {
   status: "PROGRESS" | "TODO" | "WONTDO" | "COMPLETED";
@@ -6,12 +8,17 @@ type Props = {
   description?: string;
   icon?: string;
   openModal: () => void;
+  id: string;
 };
 
-const Task = ({ status, title, description, icon, openModal }: Props) => {
+const Task = ({ status, title, description, icon, openModal, id }: Props) => {
+  const { setSelectionnedId } = useContext(TaskContext);
   return (
     <div
-      onClick={openModal}
+      onClick={() => {
+        setSelectionnedId(id);
+        openModal();
+      }}
       className={clsx(
         "w-full min-h-16 cursor-pointer    rounded-2xl grid grid-cols-[40px,1fr,40px]  px-4",
         status === "PROGRESS" && "bg-[#F5D565]",
