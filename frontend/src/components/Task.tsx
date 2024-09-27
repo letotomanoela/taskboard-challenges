@@ -24,10 +24,10 @@ const Task = ({ status, title, description, icon, openModal }: Props) => {
       <div className="size-10 flex items-center justify-center bg-white rounded-xl">
         <img src={icon} className="w-8" alt="" />
       </div>
-      <p className="text-black  text-lg pl-3">
+      <div className="text-black  text-lg pl-3">
         <p className="font-bold">{title}</p>
         <p className="text-sm">{description}</p>
-      </p>
+      </div>
       <div
         className={clsx(
           "size-10 bg-white rounded-xl flex items-center justify-center",

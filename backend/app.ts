@@ -1,11 +1,18 @@
 import express from "express";
 import dotenv from "dotenv";
 import { PrismaClient } from "@prisma/client";
+import cors from "cors";
 dotenv.config();
 
 const PORT = process.env.PORT || 8000;
 const prisma = new PrismaClient();
 const app = express();
+
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+  })
+);
 app.use(express.json());
 
 app.get("/api/task", async (req, res, next) => {
