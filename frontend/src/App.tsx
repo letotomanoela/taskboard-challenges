@@ -2,11 +2,14 @@ import Task from "./components/Task";
 import AddTaskModal from "./modals/AddTaskModal";
 import EditTaskModal from "./modals/EditTaskModal";
 import Title from "./sections/Title";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { TaskContext } from "./contexts/TaskContext";
 
 const App = () => {
   const [openAddTaskModal, setOpenAddTaskModal] = useState(false);
   const [openEditTaskModal, setOpenEditTaskModal] = useState(false);
+
+  const { isError, isLoading, isSuccess, tasks } = useContext(TaskContext);
 
   const toggleAddTaskModal = () => {
     setOpenAddTaskModal(!openAddTaskModal);
@@ -16,37 +19,26 @@ const App = () => {
   };
   return (
     <main className="w-full relative px-6 md:px-0 min-h-screen flex items-center justify-center ">
-      <div className="w-[640px] min-h-[300px]">
-        <Title />
+      {isLoading && <img alt="loading" src="./rotate.gif" className="w-20" />}
+      {!isLoading && isSuccess && (
+        <div className="w-[640px] min-h-[300px]">
+          <Title />
 
-        <section className="mt-8 space-y-5">
-          <Task
-            openModal={toggleEditTaskModal}
-            status="PROGRESS"
-            title="Task 1"
-            icon="./gif/angry.gif"
-          />
-          <Task
-            openModal={toggleEditTaskModal}
-            status="TODO"
-            title="Task 2"
-            icon="./gif/angry1.gif"
-          />
-          <Task
-            openModal={toggleEditTaskModal}
-            status="WONTDO"
-            title="Task 3"
-            icon="./gif/sad.gif"
-          />
-          <Task
-            openModal={toggleEditTaskModal}
-            status="COMPLETED"
-            title="Task 4"
-            icon="./gif/bored.gif"
-          />
-        </section>
-        <AddTaskButton onClick={toggleAddTaskModal} />
-      </div>
+          <section className="mt-8 space-y-5">
+            {tasks.map((item) => (
+              <Task
+                key={item.id}
+                openModal={toggleEditTaskModal}
+                status={item.status}
+                title={item.name}
+                icon={item.icon}
+                description={item.description}
+              />
+            ))}
+          </section>
+          <AddTaskButton onClick={toggleAddTaskModal} />
+        </div>
+      )}
 
       {openEditTaskModal && <EditTaskModal closeModal={toggleEditTaskModal} />}
       {openAddTaskModal && <AddTaskModal closeModal={toggleAddTaskModal} />}
