@@ -6,4 +6,4 @@ const PORT = process.env.PORT || 8000;
 
 const app = express();
 
-app.listen(PORT);
+app.listen(PORT, () => console.log("SERVER RUNNING ON PORT: ", PORT));
