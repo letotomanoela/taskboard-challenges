@@ -5,13 +5,15 @@ type Props = {
   title: string;
   description?: string;
   icon?: string;
+  openModal: () => void;
 };
 
-const Task = ({ status, title, description, icon }: Props) => {
+const Task = ({ status, title, description, icon, openModal }: Props) => {
   return (
     <div
+      onClick={openModal}
       className={clsx(
-        "w-full min-h-16    rounded-2xl grid grid-cols-[40px,1fr,40px]  px-4",
+        "w-full min-h-16 cursor-pointer    rounded-2xl grid grid-cols-[40px,1fr,40px]  px-4",
         status === "PROGRESS" && "bg-[#F5D565]",
         status === "COMPLETED" && "bg-[#A0ECB1]",
         status === "WONTDO" && "bg-[#F7D4D3]",

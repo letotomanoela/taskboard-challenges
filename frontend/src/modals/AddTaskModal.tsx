@@ -9,12 +9,15 @@ const icons: string[] = [
   "./gif/sad.gif",
 ];
 
-const AddTaskModal = () => {
+const AddTaskModal = ({ closeModal }: { closeModal: () => void }) => {
   return (
     <Modal>
       <div className="flex items-center justify-between">
         <h1 className="font-semibold text-xl">Task details</h1>
-        <div className="size-10 border-2 rounded-xl flex items-center justify-center">
+        <div
+          onClick={closeModal}
+          className="size-10 border-2 rounded-xl cursor-pointer flex items-center justify-center"
+        >
           <img src="./close_ring_duotone-1.svg" className="w-7" alt="" />
         </div>
       </div>
