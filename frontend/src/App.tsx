@@ -4,10 +4,21 @@ import EditTaskModal from "./modals/EditTaskModal";
 import Title from "./sections/Title";
 import { useState } from "react";
 
+import { useQuery } from "@tanstack/react-query";
+import { getTasks } from "./api/task.api";
+
 const App = () => {
   const [openAddTaskModal, setOpenAddTaskModal] = useState(false);
   const [openEditTaskModal, setOpenEditTaskModal] = useState(false);
 
+  const { isLoading, data } = useQuery({
+    queryKey: ["task"],
+    queryFn: getTasks,
+  });
+
+  if (isLoading) return <div>Loading...</div>;
+
+  console.log(data);
   const toggleAddTaskModal = () => {
     setOpenAddTaskModal(!openAddTaskModal);
   };

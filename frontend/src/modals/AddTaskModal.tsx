@@ -1,5 +1,7 @@
 import Modal from "../components/Modal";
 import FormElement from "../components/FormElement";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { createTask } from "../api/task.api";
 const icons: string[] = [
   "./gif/angry.gif",
   "./gif/angry1.gif",
@@ -9,7 +11,24 @@ const icons: string[] = [
   "./gif/sad.gif",
 ];
 
+const myTask = {
+  name: "Task 2",
+  description: "This is a task",
+  status: "COMPLETED",
+  icon: "./gif/angry.gif",
+};
 const AddTaskModal = ({ closeModal }: { closeModal: () => void }) => {
+  const queryClient = useQueryClient();
+  const { mutateAsync } = useMutation({
+    mutationKey: ["createTask"],
+    mutationFn: createTask,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({
+        queryKey: ["task"],
+      });
+    },
+  });
+
   return (
     <Modal>
       <div className="flex items-center justify-between">
@@ -43,7 +62,12 @@ const AddTaskModal = ({ closeModal }: { closeModal: () => void }) => {
         />
         <FormElement label="Status" type="text" category="status" />
       </form>
-      <button className="px-10 py-2 absolute bottom-3 right-2 rounded-full text-white bg-[#3662E3]">
+      <button
+        onClick={() => {
+          mutateAsync(myTask);
+        }}
+        className="px-10 py-2 absolute bottom-3 right-2 rounded-full text-white bg-[#3662E3]"
+      >
         Add
       </button>
     </Modal>
